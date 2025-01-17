@@ -1,7 +1,7 @@
 <!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
 
 
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:msmq="http://wixtoolset.org/schemas/v4/wxs/msmq">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:msmq="http://wixtoolset.org/schemas/v4/wxs/msmq" xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
     <Fragment>
         <ComponentGroup Id="ProductComponents">
             <ComponentRef Id="Component1" />
@@ -9,9 +9,13 @@
     </Fragment>
 
     <Fragment>
+        <util:Group Id="Everyone" Name="Everyone" />
+
         <Component Id="Component1">
             <File Source="$(sys.SOURCEFILEPATH)" KeyPath="yes" />
-            <msmq:MessageQueue Id="ExampleQueue" PathName=".\private$\example-queue" Label="Example Queue" Transactional="yes" />
+            <msmq:MessageQueue Id="ExampleQueue" PathName=".\private$\example-queue" Label="Example Queue" Transactional="yes" >
+                <msmq:MessageQueuePermission Id="ExampleQueue_Everyone" GetQueuePermissions="yes" GetQueueProperties="yes" Group="Everyone" />
+            </msmq:MessageQueue>
         </Component>
     </Fragment>
 </Wix>
