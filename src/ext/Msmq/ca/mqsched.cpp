@@ -78,7 +78,7 @@ extern "C" UINT __stdcall MessageQueuingInstall(MSIHANDLE hInstall)
 
         hr = MqiMessageQueuePermissionInstall(&lstMessageQueuePermissions, &pwzExecuteActionData);
         ExitOnFailure(hr, "Failed to add message queue permissions to execute action data");
-        iCost += lstMessageQueues.iInstallCount * COST_MESSAGE_QUEUE_PERMISSION_ADD;
+        iCost += lstMessageQueuePermissions.iInstallCount * COST_MESSAGE_QUEUE_PERMISSION_ADD;
 
         hr = WcaDoDeferredAction(CUSTOM_ACTION_DECORATION(L"MessageQueuingExecuteInstall"), pwzExecuteActionData, iCost);
         ExitOnFailure(hr, "Failed to schedule MessageQueuingExecuteInstall");
